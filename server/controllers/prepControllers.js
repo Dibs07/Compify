@@ -36,7 +36,7 @@ export const generateSubjects = async (req, res) => {
 
 export const generateChapters = async (req, res) => {
     const { exam, subject } = req.body;
-    const prompt = `Generate me the list of chapters for subject ${subject} for competitive exam ${exam} in the form of array of strings. Don't give any external text except the array.`;
+    const prompt = `Generate me the list of chapters for subject ${subject} for competitive exam ${exam} in the form of array of strings. Don't give any external text except the array. Do not repeat any chapter.`;
     try {
         const response = await model.invoke(prompt);
         return res.status(200).json({ response: response.content });

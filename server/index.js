@@ -4,6 +4,7 @@ import config from "dotenv/config";
 import cors from "cors";
 import bodyParser from "body-parser";
 import prepRouter from "./routes/prepRoutes.js";
+import studyRouter from "./routes/studyRouter.js";
 
 // config();
 const app = express();
@@ -38,3 +39,4 @@ mongoose
   });
 
   app.use("/api/v1/preparation", prepRouter);
+  app.use("/api/v1/study", studyRouter);
