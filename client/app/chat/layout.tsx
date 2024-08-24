@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata } from "next"; 
 import { Inter } from "next/font/google";
 import "../../app/globals.css";
-import InputField from "./InputField";
+import InputField from "../../components/common/Chat/InputField";
 
 
 const inter = Inter({ subsets: ["latin"] });
