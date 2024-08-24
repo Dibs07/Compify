@@ -1,9 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
+import config from "dotenv/config";
+import cors from "cors";
+import bodyParser from "body-parser";
 
-
-dotenv.config();
+// config();
 const app = express();
+app.use(express.json());
+app.use(bodyParser.json());
 
 
 app.all("/", (req, res) => {
