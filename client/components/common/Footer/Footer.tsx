@@ -2,8 +2,8 @@ import Link from 'next/link'
 import React from 'react'
 
 const Footer = () => {
-  return (
-    <div>
+    return (
+        <div>
             <footer className="text-gray-600 body-font">
                 <div className="container px-5 py-5 mx-auto flex items-center sm:flex-row flex-col">
                     <a className="flex title-font font-medium items-center md:justify-start justify-center text-white">
@@ -12,7 +12,7 @@ const Footer = () => {
                     <p className="text-sm text-black inria-sans-bold sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
                         © 2024 compify —
                         <Link
-                        href={'/'}
+                            href={'/'}
                             className="text-black ml-1 inria-sans-bold"
                             rel="noopener noreferrer"
                             target="_blank"
@@ -80,7 +80,7 @@ const Footer = () => {
                 </div>
             </footer>
         </div>
-  )
+    )
 }
 
 export default Footer

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import ChatCard from './ChatCard';
 import Modal from './Modal';
-import { getExams } from '@/utils/getExams';
+import { getExams, getSubjects } from '@/utils/getExams';
 import { IoBookSharp } from "react-icons/io5";
 import { IoMdChatbubbles } from "react-icons/io";
 import { ImPencil } from "react-icons/im";
@@ -48,9 +48,13 @@ const ChatCards = () => {
             setHeaderTitle('Choose Subject');
             console.log("Call API for step 2");
             // Call API for step 2
+            const data= await getSubjects();
+            setAPIResponse(data);
         } else if (step === 3) {
             console.log("Call API for step 3");
             // Call API for step 3
+            const data= await getSubjects();
+            setAPIResponse(data);
         }
         setLoading(false);
     };
