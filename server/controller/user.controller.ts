@@ -58,7 +58,8 @@ export const signup = async (req: Request, res: Response) => {
         return res
             .status(200)
             .json({
-                user: returnUser
+                user: returnUser,
+                accessToken
             });
     } catch (error) {
         console.log('[SIGNUP_ERROR]', error);
@@ -110,7 +111,8 @@ export const login = async (req: Request, res: Response) => {
         return res
             .status(200)
             .json({
-                user: returnUser
+                user: returnUser,
+                accessToken
             });
     } catch (error) {
         console.log('[LOGIN_ERROR]', error);
@@ -125,10 +127,21 @@ export const logout = (req: Request, res: Response) => {
     }
 }
 
-export const getProfile = (req: Request, res: Response) => {
+export const getProfile = async (req: Request, res: Response) => {
     try {
         const user = req.user;
-        console.log(user);
+        const existUser = await db.user.findFirst({
+            where: {
+                id: user.id as string
+            }
+        });
+        return res.status(200).json({
+            message: 'User found',
+            user: {
+                name: existUser?.name,
+                email: existUser?.email
+            }
+        });
     } catch (error) {
         console.log('[GET_PROFILE_ERROR]', error);
     }

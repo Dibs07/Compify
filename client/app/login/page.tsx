@@ -1,6 +1,21 @@
-import React from 'react';
+"use client";
+import axios from 'axios';
+import React, { useState } from 'react';
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    const res = await axios.post('http://localhost:5000/api/v1/auth/signup', {
+      name,
+      email,
+      password
+    });
+    console.log(res.data);
+    const data = res.data
+    localStorage.setItem("acc_compify", data.accessToken);
+  }
   return (
     <div className="fixed inset-0 flex items-center justify-center">
       <div className="relative bg-white rounded-lg drop-shadow-2xl dark:bg-gray-700 w-full max-w-lg">
@@ -12,7 +27,7 @@ const Login = () => {
         </div>
         {/* Card body */}
         <div className="p-4 md:p-5">
-          <form className="space-y-4" action="#">
+          <form className="space-y-4" onSubmit={handleLogin}>
             <div>
               <label
                 htmlFor="email"
@@ -25,8 +40,10 @@ const Login = () => {
                 name="email"
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Email"
+                placeholder="Enter your email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -40,9 +57,11 @@ const Login = () => {
                 type="password"
                 name="password"
                 id="password"
-                placeholder="Password"
+                placeholder="Enter your password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <button
