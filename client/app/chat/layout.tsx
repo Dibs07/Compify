@@ -18,13 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {children}
-        <div className="fixed inset-x-0 bottom-0">
-          <div className="flex justify-center items-center m-4">
-            <InputField />
-          </div>
-        </div>
+      <body className={`${inter.className} flex flex-col min-h-screen`}>
+        <main className="flex-grow">
+          {children}
+        </main>
+        {/*   */}
       </body>
     </html>
   );
