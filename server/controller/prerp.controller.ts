@@ -48,37 +48,44 @@ export const generateTopics = async (req: Request, res: Response) => {
     }
 };
 
+
 export const generateQuestions = async (req: Request, res: Response) => {
-    const { exam, subject, chapter, medium, numberOfQuestions, pyq } = req.body;
-    let prompt = `Generate me the list of 10 ${medium} questions for all chapters for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer. Try getting ideas from some previous year questions from 2019 to 2024. Don't give any external text except the array.`;
+    const { exam, subject, chapters, medium, numberOfQuestions, pyq } = req.body;
 
-    if (chapter) {
-        prompt = `Generate me the list of ${numberOfQuestions ? numberOfQuestions : '10'} hard questions for chapter ${chapter} for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer. Don't give any external text except the array.`;
+    if (!Array.isArray(chapters) || chapters.length === 0) {
+        return res.status(400).json({ error: "Chapters should be a non-empty array." });
     }
 
-    if (pyq) {
-        prompt = `Generate me the list of ${numberOfQuestions ? numberOfQuestions : '10'} hard questions for all chapters for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer. Include Previous Year Questions. Try getting ideas from some previous year questions from 2019 to 2024. Don't give any external text except the array.`;
-    }
+    let responses = [];
 
-    try {
-        const response = await model.invoke(prompt);
+    for (const chapter of chapters) {
+        let prompt = `Generate me the list of ${numberOfQuestions ? numberOfQuestions : '10'} hard questions for chapter ${chapter} for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer. Don't give any external text except the array.`;
 
-        // Attempting to parse the response as JSON
-        let parsedResponse;
-        try {
-            parsedResponse = JSON.parse(response.content as string);
-        } catch (parseerror: any) {
-            console.warn("Warning: Failed to parse response as JSON:", parseerror.message);
-            parsedResponse = response.content;  // Fallback to raw content
+        if (pyq) {
+            prompt = `Generate me the list of ${numberOfQuestions ? numberOfQuestions : '10'} hard questions for chapter ${chapter} for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer. Include Previous Year Questions. Try getting ideas from some previous year questions from 2019 to 2024. Don't give any external text except the array.`;
         }
 
-        console.log(parsedResponse);
-        return res.status(200).json({ response: parsedResponse });
-    } catch (error: any) {
-        console.error("Error generating questions:", error.message);
-        return res.status(500).json({ error: "Failed to generate questions. Please try again." });
+        try {
+            const response = await model.invoke(prompt);
+
+            let parsedResponse;
+            try {
+                parsedResponse = JSON.parse(response.content as string);
+            } catch (parseerror: any) {
+                console.warn(`Warning: Failed to parse response as JSON for chapter ${chapter}:`, parseerror.message);
+                parsedResponse = response.content;  // Fallback to raw content
+            }
+
+            responses.push({ chapter, questions: parsedResponse });
+        } catch (error: any) {
+            console.error(`Error generating questions for chapter ${chapter}:`, error.message);
+            return res.status(500).json({ error: `Failed to generate questions for chapter ${chapter}. Please try again.` });
+        }
     }
+
+    return res.status(200).json({ responses });
 };
+
 
 export const generateExplanation = async (req: Request, res: Response) => {
     try {

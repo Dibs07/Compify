@@ -1,16 +1,35 @@
 import React from 'react';
 import ExamsList from './ExamsList';
 import { ClimbingBoxLoader } from 'react-spinners';
+import SubjectsList from './SubjectsList';
+import ChaptersList from './ChaptersList';
+import ExamMode from './ExamMode';
+import ExamsPreview from './ExamsPreview';
 
-const Modal = ({ headerTitle, onClose, step, onNext, onBack, loading, data }: { headerTitle: string; onClose: () => void; step: number; onNext: () => void; onBack: () => void; loading:boolean; data:any }) => {
+interface ModalProps {
+    headerTitle: string;
+    onClose: () => void;
+    step: number;
+    onNext: () => void;
+    onBack: () => void;
+    loading: boolean;
+    data: any;
+    nextActive: boolean;
+}
+
+const Modal: React.FC<ModalProps> = ({ headerTitle, onClose, step, onNext, onBack, loading, data, nextActive }) => {
     const renderContent = () => {
         switch (step) {
             case 1:
                 return <ExamsList data={data} />;
             case 2:
-                return <p>This is the content for step 2.</p>;
+                return <SubjectsList data={data} />;
             case 3:
-                return <p>This is the content for step 3.</p>;
+                return <ChaptersList data={data} />;
+            case 4:
+                return <ExamMode />;
+            case 5:
+                return <ExamsPreview />
             default:
                 return <p>This is the default content.</p>;
         }
@@ -24,7 +43,7 @@ const Modal = ({ headerTitle, onClose, step, onNext, onBack, loading, data }: { 
             className="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50"
         >
             <div className="relative p-4 w-full max-w-md max-h-full">
-                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 max-h-[80vh] overflow-y-auto">
                     <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                             {headerTitle}
@@ -74,6 +93,7 @@ const Modal = ({ headerTitle, onClose, step, onNext, onBack, loading, data }: { 
                             type="button"
                             className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
                             onClick={onNext}
+                            disabled={!nextActive}
                         >
                             Next
                         </button>

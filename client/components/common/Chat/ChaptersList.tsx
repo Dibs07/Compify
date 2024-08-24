@@ -1,39 +1,49 @@
 "use client";
-import { useSubject } from '@/lib/store/subject';
+
+import { useChapter } from '@/lib/store/chapters';
 import React, { useState } from 'react';
 
-const SubjectsList = ({ data }: { data: any }) => {
-    const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
-    const setSubject:any = useSubject((state)=>state.setSubject);
+const ChaptersList = ({ data }: { data: string[] }) => {
+    const [selectedChapters, setSelectedChapters] = useState<string[]>([]);
+    const setChapters: any = useChapter((state) => state.setChapter);
 
-    const handleSelection = (subject: string) => {
-        setSelectedSubject(subject);
-        console.log(subject)
-        setSubject(subject);
+    const handleSelection = (chapter: string) => {
+        setSelectedChapters((prevSelectedChapters) => {
+            if (prevSelectedChapters.includes(chapter)) {
+                // Remove the chapter if it's already selected
+                const updatedChapters = prevSelectedChapters.filter((ch) => ch !== chapter);
+                setChapters(updatedChapters);
+                return updatedChapters;
+            } else {
+                // Add the chapter to the selection
+                const updatedChapters = [...prevSelectedChapters, chapter];
+                setChapters(updatedChapters);
+                return updatedChapters;
+            }
+        });
     };
 
     return (
         <div className="p-4 md:p-5">
-            <p className="text-gray-500 dark:text-gray-400 mb-4">Select your desired subject:</p>
+            <p className="text-gray-500 dark:text-gray-400 mb-4">Select your desired chapters:</p>
             <ul className="space-y-4 mb-4">
-                {data.map((subject: string, index: number) => (
+                {data.map((chapter: string, index: number) => (
                     <li key={index}>
                         <input
-                            type="radio"
-                            id={`job-${index}`}
-                            name="job"
-                            value={subject}
+                            type="checkbox"
+                            id={`chapter-${index}`}
+                            name="chapter"
+                            value={chapter}
                             className="hidden peer"
-                            checked={selectedSubject === subject}
-                            onChange={(e:any) => handleSelection(e.target.value)}
-                            required
+                            checked={selectedChapters.includes(chapter)}
+                            onChange={() => handleSelection(chapter)}
                         />
                         <label
-                            htmlFor={`job-${index}`}
+                            htmlFor={`chapter-${index}`}
                             className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500"
                         >
                             <div className="block">
-                                <div className="w-full text-lg font-semibold">{subject}</div>
+                                <div className="w-full text-lg font-semibold">{chapter}</div>
                             </div>
                             <svg
                                 className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400"
@@ -58,4 +68,4 @@ const SubjectsList = ({ data }: { data: any }) => {
     );
 };
 
-export default SubjectsList;
+export default ChaptersList;
