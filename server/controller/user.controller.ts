@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as argon2 from 'argon2';
 import * as jwt from 'jsonwebtoken';
-import { db } from "../db/db";
+import { db } from "../config/db";
 
 export const signup = async (req: Request, res: Response) => {
     try {
