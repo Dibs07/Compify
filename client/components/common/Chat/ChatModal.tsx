@@ -1,9 +1,19 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
+import SubjectModal from './SubjectModal';
 
 const ChatModal = ({ onClose }:{
     onClose:any;
 }) => {
+    const [isModalOpen,setIsModalOpen] = useState(false);
+    const handleCardClick:any = () => {
+        onClose();
+            setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
   return (
     <div
       id="select-modal"
@@ -144,9 +154,10 @@ const ChatModal = ({ onClose }:{
                     </label>
                   </li>
                 </ul>
-            <button className="text-white inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button onClick={handleCardClick} className="text-white inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Next step
             </button>
+            {isModalOpen && <SubjectModal onClose={closeModal} />}
           </div>
         </div>
       </div>

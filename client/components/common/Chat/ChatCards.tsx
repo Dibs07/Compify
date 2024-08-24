@@ -48,7 +48,6 @@ const ChatCards = () => {
                 </div>
             </div>
 
-            {/* Render the ChatModal */}
             {isModalOpen && <ChatModal onClose={closeModal} />}
         </div>
     );
