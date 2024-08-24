@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from 'jsonwebtoken';
 
-export const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
+export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.token as string;
         if (!token)

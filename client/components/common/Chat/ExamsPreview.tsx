@@ -1,25 +1,41 @@
+"use client";
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useChapter } from '@/lib/store/chapters';
 import { useExamStore } from '@/lib/store/examMode';
+import { useExam } from '@/lib/store/exam';
+import { useSubject } from '@/lib/store/subject';
+import toast, { Toaster } from "react-hot-toast";
 
 const ExamsPreview = () => {
+    const router = useRouter();
     const { chapter: selectedChapters }:any = useChapter((state) => ({
         chapter: state.chapter,
     }));
     const numberOfQuestions = useExamStore((state) => state.numberOfQuestions);
     const minutesPerQuestion = useExamStore((state) => state.minutesPerQuestion);
+    const subjectForExam = useSubject((state)=>state.subject);
+    const exam: any = useExam((state)=>state.exam);
+
     const totalDuration = numberOfQuestions * minutesPerQuestion * selectedChapters?.length;
 
-    const examName = "Sample Exam"; // Replace this with dynamic exam name if available
-    const subject = "Mathematics"; // Replace this with dynamic subject if available
+    const examName = exam;
+    const subject = subjectForExam; 
 
     const handleStartExam = () => {
-        // Implement your start exam logic here
-        console.log('Exam started');
+        if(localStorage.getItem('acc_compify') && localStorage.getItem('verificationToken')){
+            router.push('/exam');
+        }
+        else{
+            router.push('/');
+            toast.error("User is not authenticated yet !")
+        }
+        
     };
 
     return (
         <div className="p-4 md:p-5">
+            <Toaster position='bottom-right' />
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{examName}</h2>
             <p className="text-lg text-gray-700 dark:text-gray-400 mb-4">Subject: {subject}</p>
 

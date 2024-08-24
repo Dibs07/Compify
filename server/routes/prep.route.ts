@@ -7,15 +7,16 @@ import {
     generateSubjects,
     generateTopics
 } from '../controller/prerp.controller';
+import { isAuthenticated } from '../middleware/verify-user';
 
 const prepRouter = express.Router();
 
-prepRouter.post('/', generateExams);
-prepRouter.post('/subjects', generateSubjects);
-prepRouter.post('/chapters', generateChapters);
-prepRouter.post('/topics', generateTopics);
-prepRouter.post('/questions', generateQuestions);
-prepRouter.post('/answers', generateExplanation);
+prepRouter.post('/', isAuthenticated, generateExams);
+prepRouter.post('/subjects', isAuthenticated, generateSubjects);
+prepRouter.post('/chapters', isAuthenticated, generateChapters);
+prepRouter.post('/topics', isAuthenticated, generateTopics);
+prepRouter.post('/questions', isAuthenticated, generateQuestions);
+prepRouter.post('/answers', isAuthenticated, generateExplanation);
 
 
 export default prepRouter;

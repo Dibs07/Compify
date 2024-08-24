@@ -7,8 +7,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    const res = await axios.post('http://localhost:5000/api/v1/auth/signup', {
-      name,
+    const res = await axios.post('http://localhost:5000/api/v1/auth/login', {
+      // name,
       email,
       password
     });
