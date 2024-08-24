@@ -3,13 +3,15 @@ import React from 'react';
 import './ChatCard.css';
 import { Button } from '@/components/ui/button';
 
-const ChatCard = ({ title, description }: {
+const ChatCard = ({ title, description,onClick }: {
     title: string;
     description: string;
+    onClick: any;
 }) => {
     return (
         <div
             className={`relative border border-black p-4 w-full h-48 max-w-xs mx-auto future-event-card`}
+            onClick={onClick}
         >
             <div className="flex flex-col items-center justify-center h-full">
                 <div className={`inria-sans-bold text-lg font-bold`}>
