@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 import ChatCard from './ChatCard';
 import Modal from './Modal';
 import { getExams } from '@/utils/getExams';
-import ChatModal from './ChatModal';
 import { IoBookSharp } from "react-icons/io5";
 import { IoMdChatbubbles } from "react-icons/io";
 import { ImPencil } from "react-icons/im";
 
 const ChatCards = () => {
     const [isPrepareModalOpen, setIsPrepareModalOpen] = useState(false);
-    const [loading,setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [APIResponse, setAPIResponse] = useState([]);
     const [headerTitle, setHeaderTitle] = useState('');
     const [step, setStep] = useState(1);
@@ -29,19 +28,19 @@ const ChatCards = () => {
     useEffect(() => {
         setHeaderTitle('Choose Exam');
         const fetchInitialData = async () => {
-          setLoading(true);
-          const data = await getExams(); 
-          setAPIResponse(data);
-          
-          setLoading(false);
-        };
-    
-        if (step === 1) {
-          fetchInitialData();
-        }
-      }, [step]);
+            setLoading(true);
+            const data = await getExams();
+            setAPIResponse(data);
 
-    const handleNext = async() => {
+            setLoading(false);
+        };
+
+        if (step === 1) {
+            fetchInitialData();
+        }
+    }, [step]);
+
+    const handleNext = async () => {
         setLoading(true);
         setStep((prevStep) => prevStep + 1);
 
@@ -63,31 +62,23 @@ const ChatCards = () => {
     const cardsData = [
         {
             title: 'PREPARE',
-            description: 'Get ready with all the resources and materials you need for success.'
-        { 
-            title: 'PREPARE', 
-            description: 'Get ready with all the resources and materials you need for success.' ,
-            icon: <IoBookSharp className='text-primary-700 text-3xl mb-2'/>,
+            description: 'Get ready with all the resources and materials you need for success.',
+            icon: <IoBookSharp className='text-primary-700 text-3xl mb-2' />,
             color: 'border-primary-700'
         },
         {
             title: 'STUDY',
-            description: 'Focus on learning and understanding the concepts thoroughly.'
-        { 
-            title: 'STUDY', 
             description: 'Focus on learning and understanding the concepts thoroughly.',
-            icon: <ImPencil className='text-green-800 text-3xl mb-2'/>,
+            icon: <ImPencil className='text-green-800 text-3xl mb-2' />,
             color: 'border-green-800'
         },
         {
             title: 'CHAT',
-            description: 'Engage in discussions and share your knowledge with others.'
-        { 
-            title: 'CHAT', 
             description: 'Engage in discussions and share your knowledge with others.',
-            icon: <IoMdChatbubbles className='text-yellow-500 text-3xl mb-2'/>,
+            icon: <IoMdChatbubbles className='text-yellow-500 text-3xl mb-2' />,
             color: 'border-yellow-500'
         }
+
     ];
 
     return (
