@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoSearchCircleSharp } from "react-icons/io5";
+import { IoMdSend } from "react-icons/io";
 
 const InputField: React.FC = () => {
   return (
@@ -7,9 +7,9 @@ const InputField: React.FC = () => {
       <input
         type="text"
         placeholder="Enter your text here..."
-        className="w-full px-4 py-2 border-2 border-[#FF6701] rounded-lg focus:outline-none focus:ring-2 focus:border-3 focus:ring-[#FF6701] pr-10"
+        className="w-full px-4 py-2 border-2 border-primary-700 rounded-lg focus:outline-none focus:ring-2 focus:border-3 focus:ring-primary-800 pr-10"
       />
-      <IoSearchCircleSharp className="absolute right-2 top-1/2 transform -translate-y-1/2 text-[#FF6701] text-2xl" />
+      <IoMdSend className="absolute right-2 top-1/2 transform -translate-y-1/2 text-primary-700 text-2xl" />
     </div>
   );
 };
