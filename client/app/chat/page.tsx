@@ -1,10 +1,18 @@
+import ChatCard from '@/components/common/Chat/ChatCard'
+import ChatCards from '@/components/common/Chat/ChatCards'
+import ChatModal from '@/components/common/Chat/ChatModal'
 import React from 'react'
 
 const Chat = () => {
+   
+    
   return (
-    <div className='min-h-screen'>
-
-    </div>
+    <>
+      <div>
+        <ChatCards/>
+        <ChatModal/>
+      </div>
+    </>
   )
 }
 
