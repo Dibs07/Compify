@@ -17,7 +17,6 @@ import { ImPencil } from "react-icons/im";
 const ChatCards = () => {
     const [isPrepareModalOpen, setIsPrepareModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [loading, setLoading] = useState(true);
     const [APIResponse, setAPIResponse] = useState([]);
     const [headerTitle, setHeaderTitle] = useState('');
     const [nextActive, setNextActive] = useState(false);
