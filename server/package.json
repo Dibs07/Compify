@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
+  "module": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +16,9 @@
     "url": "https://github.com/Subhadeep-coder/status-code/issues"
   },
   "homepage": "https://github.com/Subhadeep-coder/status-code#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.5.4"
+  }
 }
