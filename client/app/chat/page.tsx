@@ -1,15 +1,19 @@
 "use client"
 import ChatCard from '@/components/common/Chat/ChatCard'
 import ChatCards from '@/components/common/Chat/ChatCards'
-import ChatModal from '@/components/common/Chat/ChatModal'
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Chat = () => {
 
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("acc_compify");
+    setToken(accessToken);
+  }, [])
+
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem("acc_compify");
       const res = await axios.get('http://localhost:5000/api/v1/auth/get-profile', {
         withCredentials: true,
         headers: {
@@ -19,8 +23,9 @@ const Chat = () => {
       console.log(res.data);
     }
 
+    if (!token) return;
     fetchUser();
-  }, [])
+  }, [token])
 
   return (
     <>

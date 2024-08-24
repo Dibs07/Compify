@@ -21,13 +21,13 @@ const ChatCards = () => {
     const [headerTitle, setHeaderTitle] = useState('');
     const [nextActive, setNextActive] = useState(false);
     const [step, setStep] = useState(1);
-    const exam: any = useExam((state) => state.exam);
-    const subject:any = useSubject((state)=>state.subject);
-    const chapter:any = useChapter((state)=>state.chapter);
-    const pyq:any = useExamStore((state)=>state.pyq);
-    const medium:any = useExamStore((state)=>state.medium);
-    const numberOfQuestions:any = useExamStore((state)=>state.numberOfQuestions);
-    const minutesPerQuestion:any = useExamStore((state)=>state.minutesPerQuestion);
+    const exam: any = useExam((state: { exam: any; }) => state.exam);
+    const subject: any = useSubject((state: { subject: any; }) => state.subject);
+    const chapter: any = useChapter((state: { chapter: any; }) => state.chapter);
+    const pyq: any = useExamStore((state: { pyq: any; }) => state.pyq);
+    const medium: any = useExamStore((state: { medium: any; }) => state.medium);
+    const numberOfQuestions: any = useExamStore((state: { numberOfQuestions: any; }) => state.numberOfQuestions);
+    const minutesPerQuestion: any = useExamStore((state: { minutesPerQuestion: any; }) => state.minutesPerQuestion);
 
     const handleCardClick = (title: string) => {
         if (title === 'PREPARE') {
@@ -52,14 +52,14 @@ const ChatCards = () => {
 
 
         if (step === 1) {
-            
+
             fetchInitialData();
         }
-      }, [step]);
+    }, [step]);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(step)
-    },[step])
+    }, [step])
 
     useEffect(() => {
         if (exam) {
@@ -107,7 +107,7 @@ const ChatCards = () => {
             setStep((prevStep) => prevStep + 1);
             setHeaderTitle('Exam Details Preview');
             setLoading(true);
-    
+
             // Log the parameters being passed to getQuestions for debugging
             console.log({
                 exam,
@@ -117,7 +117,7 @@ const ChatCards = () => {
                 numberOfQuestions,
                 pyq,
             });
-    
+
             const data = await getQuestions(exam, subject, chapter, medium, numberOfQuestions, pyq);
             if (typeof localStorage !== 'undefined') {
                 try {
@@ -133,7 +133,7 @@ const ChatCards = () => {
             setLoading(false);
         }
     };
-    
+
 
     const handleBack = () => {
         setStep((prevStep) => (prevStep > 1 ? prevStep - 1 : 1));
