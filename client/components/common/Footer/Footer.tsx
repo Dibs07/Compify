@@ -9,11 +9,11 @@ const Footer = () => {
                     <a className="flex title-font font-medium items-center md:justify-start justify-center text-white">
                         <span className="text-xl inria-sans-bold font-bold">Compify</span>
                     </a>
-                    <p className="text-sm text-gray-100 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
+                    <p className="text-sm text-gray-100 inria-sans-bold sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
                         © 2024 compify —
                         <Link
                         href={'/'}
-                            className="text-gray-100 ml-1"
+                            className="text-gray-100 ml-1 inria-sans-bold"
                             rel="noopener noreferrer"
                             target="_blank"
                         >
