@@ -4,20 +4,20 @@ import React from 'react'
 const Footer = () => {
   return (
     <div>
-            <footer className="text-gray-600 body-font" style={{background: 'linear-gradient(to right, #4a148c, #ff8f00)'}}>
+            <footer className="text-gray-600 body-font" style={{background:'#FF6701'}}>
                 <div className="container px-5 py-5 mx-auto flex items-center sm:flex-row flex-col">
                     <a className="flex title-font font-medium items-center md:justify-start justify-center text-white">
-                        <span className="text-xl font-bold">GamerGadgets</span>
+                        <span className="text-xl inria-sans-bold font-bold">Compify</span>
                     </a>
                     <p className="text-sm text-gray-100 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-                        © 2024 gamergadgets —
+                        © 2024 compify —
                         <Link
                         href={'/'}
                             className="text-gray-100 ml-1"
                             rel="noopener noreferrer"
                             target="_blank"
                         >
-                            @gamergadgets
+                            @compify
                         </Link>
                     </p>
                     <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
