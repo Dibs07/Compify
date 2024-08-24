@@ -1,6 +1,6 @@
 import express from 'express';
-import { generateStudyMaterials } from '../controllers/studyController.js';
-import { generateChatting } from '../controllers/chatControllers.js';
+import { generateStudyMaterials } from '../controller/study.controller';
+import { generateChatting } from '../controller/chatControllers';
 
 const studyRouter = express.Router();
 

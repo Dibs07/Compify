@@ -1,5 +1,12 @@
 import express from 'express';
-import { generateChapters, generateExams, generateExplanation, generateQuestions, generateSubjects, generateTopics } from '../controllers/prepControllers.js';
+import {
+    generateChapters,
+    generateExams,
+    generateExplanation,
+    generateQuestions,
+    generateSubjects,
+    generateTopics
+} from '../controller/prerp.controller';
 
 const prepRouter = express.Router();
 
