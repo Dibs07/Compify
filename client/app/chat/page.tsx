@@ -29,14 +29,11 @@ const Chat = () => {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden">
-      {/* Background Image */}
       <img
         src='wave-bg.avif'
         className='absolute inset-0 h-full w-full object-cover opacity-55'
         alt='Background'
       />
-
-      {/* Chat Cards Positioned on Top */}
       <div className='absolute inset-0 flex items-center justify-center'>
         <ChatCards />
       </div>
