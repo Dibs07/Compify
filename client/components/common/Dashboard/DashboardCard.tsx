@@ -7,8 +7,8 @@ export default function DashboardCard({data}:{data: any}) {
         router.push(`/result/${data.id}`)
     }
   return (
-    <div className="flex items-center justify-center inset-y-1/2 rounded-xl border-black border-2 bg-gray-100">
-      <Card className="max-w-sm">
+    <div className="flex items-center justify-center inset-y-1/2 rounded-xl bg-gray-100">
+      <Card>
         <CardHeader>
           <CardTitle>Card Title</CardTitle>
           <CardDescription>This is a description of the card.</CardDescription>
@@ -19,7 +19,7 @@ export default function DashboardCard({data}:{data: any}) {
           </p>
         </CardContent>
         <CardFooter>
-          <button className="px-4 py-2 text-white bg-black rounded-md"
+          <button className="px-3 py-2 text-primary-700 font-bold border-2 border-primary-700 bg-white rounded-md"
            onClick={handleClick}>
             View Details
         </button>
