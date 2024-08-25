@@ -11,12 +11,4 @@ export const navRoutes = [
       name: "Chats",
       path: "/chat",
     },
-    {
-      name: "Dashboard",
-      path: "/dashboard"
-    }
-    // {
-    //   name: "Team",
-    //   path: "/team",
-    // },
   ];

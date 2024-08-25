@@ -54,6 +54,20 @@ const Navbar = () => {
                                     </Link>
                                 ))}
                                 {typeof localStorage !== 'undefined' && localStorage.getItem('acc_compify') && (
+                                    <Link
+                                        href={"/dashboard"}
+                                        onClick={() => {
+                                            setIsMenuOpen(false);
+                                        }}
+                                    >
+                                        <li
+                                            className="my-3 mx-4 cursor-pointer text-black font-bold"
+                                        >
+                                            Dashboard
+                                        </li>
+                                    </Link>
+                                )}
+                                {typeof localStorage !== 'undefined' && localStorage.getItem('acc_compify') && (
                                     <button
                                         onClick={() => {
                                             localStorage.removeItem("acc_compify");

@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 type Props = {
     params: {
@@ -10,7 +10,8 @@ type Props = {
 }
 
 const Result = ({ params }: Props) => {
-    const [result, setResult] = useState({})
+    const [result, setResult] = useState<any>({})
+    const router = useRouter();
 
     useEffect(() => {
         const getResult = async () => {
@@ -22,7 +23,7 @@ const Result = ({ params }: Props) => {
                     }
                 });
                 console.log(response.data);
-                setResult(response.data.history);
+                setResult(response.data.history[0]);
             } catch (error) {
                 console.error("There was an error fetching the data!", error);
             }
@@ -49,9 +50,9 @@ const Result = ({ params }: Props) => {
                     {/* <div className="text-center mb-12">
                         <p className="text-xl font-medium text-gray-700">{verdict}</p>
                     </div> */}
-                    {/* <div className="space-y-8">
+                    <div className="space-y-8">
                         {
-                            data && data.content.map((response, index) => (
+                           result && result.content?.map((response: any, index: any) => (
                                 <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-md">
                                     <h3 className="text-xl font-semibold text-gray-800 mb-4">{`Q${index + 1}: ${response.question}`}</h3>
                                     <ul className="space-y-2">
@@ -85,8 +86,8 @@ const Result = ({ params }: Props) => {
                                 </div>
                             ))
                         }
-                    </div> */}
-                    <button className="mt-4 px-4 py-2 text-white bg-black rounded-md">
+                    </div>
+                    <button className="mt-4 px-4 py-2 text-white bg-black rounded-md" onClick={() => router.push("/chatbot")}>
                         Analyze
                     </button>
                 </div>
