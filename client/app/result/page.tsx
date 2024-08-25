@@ -1,5 +1,6 @@
 "use client";
 import { getAnswers } from '@/utils/getAnswers';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { BeatLoader } from 'react-spinners';
 
@@ -10,7 +11,7 @@ const Page = () => {
   const [responses, setResponses] = useState<any[]>([]);
   const [score, setScore] = useState<number>(0);
   const [grade, setGrade] = useState<string>('');
-
+  const router = useRouter();
   useEffect(() => {
     const calculateGrade = (score: number) => {
       if (score >= 90) return 'AA';
@@ -29,11 +30,9 @@ const Page = () => {
           const parsedData = JSON.parse(data);
           setAnswersData(parsedData);
 
-          // Fetch the results
           const result = await getAnswers(parsedData.subject, parsedData.exam, parsedData.answers, parsedData.chapters);
 
           if (result.responses) {
-            // Set responses, verdict, score, and grade
             setResponses(result.responses);
             setVerdict(result.verdict);
 
@@ -75,6 +74,12 @@ const Page = () => {
             <div className="text-center mb-12">
               <p className="text-xl font-medium text-gray-700">{verdict}</p>
             </div>
+            <div className='w-full mx-auto flex flex-col justify-center items-center '>
+            <button className='bg-blue-500 text-white px-5 py-2 font-semibold text-xl' onClick={()=>{
+              router.push('/chatbot')
+            }}>Analyze Now</button>
+            </div>
+            
             <div className="space-y-8">
               {
                 responses.map((response, index) => (
@@ -112,9 +117,7 @@ const Page = () => {
                 ))
               }
             </div>
-            <button className='bottom-0 right-0 bg-black'>
-              Analyze
-            </button>
+         
           </div>
       }
     </div>

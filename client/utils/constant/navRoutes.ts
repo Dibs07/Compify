@@ -5,14 +5,14 @@ export const navRoutes = [
     },
     {
       name: "Study",
-      path: "/events",
+      path: "/chatbot",
     },
     {
       name: "Chats",
-      path: "/gallery",
+      path: "/chat",
     },
     {
       name: "Team",
-      path: "/team/swc",
+      path: "/team",
     },
   ];

@@ -13,6 +13,7 @@ import { useExamStore } from '@/lib/store/examMode';
 import { IoBookSharp } from "react-icons/io5";
 import { IoMdChatbubbles } from "react-icons/io";
 import { ImPencil } from "react-icons/im";
+import { useRouter } from 'next/navigation';
 
 const ChatCards = () => {
     const [isPrepareModalOpen, setIsPrepareModalOpen] = useState(false);
@@ -28,10 +29,13 @@ const ChatCards = () => {
     const medium: any = useExamStore((state: { medium: any; }) => state.medium);
     const numberOfQuestions: any = useExamStore((state: { numberOfQuestions: any; }) => state.numberOfQuestions);
     const minutesPerQuestion: any = useExamStore((state: { minutesPerQuestion: any; }) => state.minutesPerQuestion);
-
+    const router = useRouter();
     const handleCardClick = (title: string) => {
         if (title === 'PREPARE') {
             setIsPrepareModalOpen(true);
+        }
+        if(title === 'STUDY') {
+            router.push('/chatbot');
         }
     };
 
@@ -41,7 +45,7 @@ const ChatCards = () => {
     };
 
     useEffect(() => {
-        setHeaderTitle('Choose Exam');
+        setHeaderTitle('Assessment Preparation');
         const fetchInitialData = async () => {
             setLoading(true);
             const data = await getExams();

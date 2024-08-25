@@ -62,6 +62,12 @@ const Navbar = () => {
                                     </li>
                                 </Link>
                             ))}
+                            <button onClick={()=>{
+                                localStorage.removeItem("user");
+                                router.push("/login");
+                            }} className="bg-white border text-blue-600 border-blue-600 rounded-xl px-5 py-1 font-semibold text-md">
+                                Logout
+                            </button>
                         </ul>
                     </div>
                 </div>

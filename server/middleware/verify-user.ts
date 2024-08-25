@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken';
 export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.token as string;
+        console.log(token);
         if (!token)
             return res.status(401).json({
                 message: 'User not authenticated'
