@@ -12,7 +12,6 @@ const Navbar = () => {
     const [userImg, setUserImg] = useState("");
     const router = useRouter();
     const pathname = usePathname();
-    const [role, setRole] = useState("");
 
     return (
         <>
@@ -65,7 +64,7 @@ const Navbar = () => {
                                     </li>
                                 </Link>
                             ))}
-                           {localStorage.getItem('acc_compify') && <button onClick={()=>{
+                           {typeof localStorage !== 'undefined' && localStorage.getItem('acc_compify') && <button onClick={()=>{
                                 localStorage.removeItem("acc_compify");
                                 router.push("/login");
                             }} className="bg-white border text-blue-600 border-blue-600 rounded-xl px-5 py-1 font-semibold text-md">

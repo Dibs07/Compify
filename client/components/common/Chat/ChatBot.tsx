@@ -7,12 +7,12 @@ export const ChatBotUI = () => {
   const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
   const [input, setInput] = useState('');
   const chatContainerRef = useRef<HTMLDivElement | null>(null);  // Create a ref for the chat container
-  const data = localStorage.getItem('answers');
+  const data = typeof localStorage !== 'undefined' && localStorage.getItem('answers');
   useEffect(()=>{
     const getFirstMessage = async () => {
       try {
         if(data){
-          const botResponse = await getResponseFromBot( "Wish me as a teacher to ask if I have any doubt !");
+          const botResponse = await getResponseFromBot( "Wish me as a teacher to ask if I have any doubt, make it a bit short and crisp !");
           setMessages((prevMessages) => [...prevMessages, { text: botResponse, isUser: false }]);
         }
       } catch (error) {
