@@ -17,17 +17,13 @@ const Navbar = () => {
     return (
         <>
             <div className="flex items-center justify-between pt-2 text-white w-screen overflow-x-hidden font-hollirood lg:w-full">
-5
-                <div className="flex-shrink-0">
-                    <Image width={100} height={100} src="/logo.png" alt="logo" />
-                </div>
                 <div
                     className={`flex-grow ${scrolling || isMenuOpen
                             ? "rounded-xl border-b bg-body"
                             : "bg-transparent"
                         }  py-2 max-md:border-b`}
                 >
-                    <div className="flex justify-between items-center w-full max-w-screen-xl">
+                    <div className="flex justify-center items-center w-full max-w-screen-xl">
                         <div
                             className="flex h-full w-8 cursor-pointer flex-col items-center justify-center gap-[6px] md:hidden"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
