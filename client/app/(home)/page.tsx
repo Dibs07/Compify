@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col">
-        <main className="flex items-center justify-center">
+        <main className="min-h-screen flex items-center justify-center">
           <Hero />
         </main>
         <Footer />
