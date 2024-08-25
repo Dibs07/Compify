@@ -16,9 +16,13 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="flex items-center justify-center pt-2 text-white w-screen overflow-x-hidden font-hollirood lg:w-full">
+            <div className="flex items-center justify-between pt-2 text-white w-screen overflow-x-hidden font-hollirood lg:w-full">
+5
+                <div className="flex-shrink-0">
+                    <Image width={100} height={100} src="/logo.png" alt="logo" />
+                </div>
                 <div
-                    className={`${scrolling || isMenuOpen
+                    className={`flex-grow ${scrolling || isMenuOpen
                             ? "rounded-xl border-b bg-body"
                             : "bg-transparent"
                         }  py-2 max-md:border-b`}
@@ -45,7 +49,7 @@ const Navbar = () => {
                             ></span>
                         </div>
                         <ul
-                            className="flex flex-row gap-2"
+                            className="flex flex-row gap-2 justify-center w-full"
                         >
                             {navRoutes.map((link, index) => (
                                 <Link
