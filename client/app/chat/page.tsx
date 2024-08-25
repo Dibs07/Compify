@@ -14,7 +14,7 @@ const Chat = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get('http://localhost:5000/api/v1/auth/get-profile', {
+      const res = await axios.get('https://compify.onrender.com/api/v1/auth/get-profile', {
         withCredentials: true,
         headers: {
           'token': token

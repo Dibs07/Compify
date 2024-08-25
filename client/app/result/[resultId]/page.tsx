@@ -16,7 +16,7 @@ const Result = ({ params }: Props) => {
         const getResult = async () => {
             try {
                 const { resultId } = params;
-                const response = await axios.get(`http://localhost:5000/api/v1/prep/get-prep-history/${resultId}`, {
+                const response = await axios.get(`https://compify.onrender.com/api/v1/prep/get-prep-history/${resultId}`, {
                     headers: {
                         "token": localStorage.getItem("acc_compify")
                     }

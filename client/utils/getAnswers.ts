@@ -3,7 +3,7 @@ import { Answer } from "@/lib/store/answers";
 export const getAnswers = async (subject:string,exam:string,answers:Answer[],chapters:string[]) => {
     try {
         const accessToken = localStorage.getItem("acc_compify");
-        const response: any = await fetch('http://localhost:5000/api/v1/prep/answers',
+        const response: any = await fetch('https://compify.onrender.com/api/v1/prep/answers',
             {
                 method: 'POST',
                 headers: {
