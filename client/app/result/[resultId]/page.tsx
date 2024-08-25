@@ -1,10 +1,35 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useParams } from 'next/navigation';
 
 type Props = {
-    data: any;
+    params: {
+        resultId: string;
+    }
 }
 
-const Result = (data: Props) => {
+const Result = ({ params }: Props) => {
+    const [result, setResult] = useState({})
+
+    useEffect(() => {
+        const getResult = async () => {
+            try {
+                const { resultId } = params;
+                const response = await axios.get(`http://localhost:5000/api/v1/prep/get-prep-history/${resultId}`, {
+                    headers: {
+                        "token": localStorage.getItem("acc_compify")
+                    }
+                });
+                console.log(response.data);
+                setResult(response.data.history);
+            } catch (error) {
+                console.error("There was an error fetching the data!", error);
+            }
+        };
+        getResult();
+    }, [params]);
+
     return (
         <div className="flex flex-col w-full justify-center items-center  bg-gradient-to-br from-blue-100 to-indigo-300 p-4">
             <h1 className='font-semibold text-xl mb-5'>Results on Recent Assessment</h1>
@@ -24,7 +49,7 @@ const Result = (data: Props) => {
                     {/* <div className="text-center mb-12">
                         <p className="text-xl font-medium text-gray-700">{verdict}</p>
                     </div> */}
-                    <div className="space-y-8">
+                    {/* <div className="space-y-8">
                         {
                             data && data.content.map((response, index) => (
                                 <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-md">
@@ -60,8 +85,8 @@ const Result = (data: Props) => {
                                 </div>
                             ))
                         }
-                    </div>
-                    <button className='bottom-0 right-0 bg-black'>
+                    </div> */}
+                    <button className="mt-4 px-4 py-2 text-white bg-black rounded-md">
                         Analyze
                     </button>
                 </div>

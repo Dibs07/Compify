@@ -8,7 +8,7 @@ export default function DashboardCard({data}:{data: any}) {
     }
   return (
     <div className="flex items-center justify-center inset-y-1/2 rounded-xl border-black border-2 bg-gray-100">
-      <Card className="max-w-sm">
+      <Card>
         <CardHeader>
           <CardTitle>Card Title</CardTitle>
           <CardDescription>This is a description of the card.</CardDescription>
