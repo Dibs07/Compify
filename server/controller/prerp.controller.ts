@@ -62,10 +62,10 @@ export const generateQuestions = async (req: Request, res: Response) => {
     let responses = [];
 
     for (const chapter of chapters) {
-        let prompt = `Generate me the list of ${numberOfQuestions ? numberOfQuestions : '10'} hard questions for chapter ${chapter} for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer. Don't give any external text except the array.`;
+        let prompt = `Generate me the list of ${numberOfQuestions ? numberOfQuestions : '10'} hard questions for chapter ${chapter} for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer (It should be in full option , not as option index). Don't give any external text except the array.`;
 
         if (pyq) {
-            prompt = `Generate me the list of ${numberOfQuestions ? numberOfQuestions : '10'} hard questions for chapter ${chapter} for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer. Include Previous Year Questions. Try getting ideas from some previous year questions from 2019 to 2024. Don't give any external text except the array.`;
+            prompt = `Generate me the list of ${numberOfQuestions ? numberOfQuestions : '10'} hard questions for chapter ${chapter} for subject ${subject} for competitive exam ${exam} in the form of array of objects with question, options, answer (It should be in full option , not as option index). Include Previous Year Questions. Try getting ideas from some previous year questions from 2019 to 2024. Don't give any external text except the array.`;
         }
 
         try {
@@ -102,21 +102,56 @@ export const generateQuestions = async (req: Request, res: Response) => {
 
 export const generateExplanation = async (req: Request, res: Response) => {
     try {
-        const { questions } = req.body;
-        const questionTexts = questions.map((q: any) => q.question).join("\n");
-        const prompt = `Provide explanations for the following questions in the form of an array of strings, with each explanation corresponding to each question. Don't give any external text except the array.\nQuestions:\n${questionTexts}`;
+        const { answers, exam, subject, chapters } = req.body;
+        const prompt = `Check the userAnswer against the correct answer for each question provided in the following data. Generate an array of objects where each object contains the original question, options, correct answer, userAnswer, and a detailed explanation for each question. 
+The final output should be in the following format:
+[
+  {
+    "question": "string",
+    "options": ["string", "string", "string", "string"],
+    "answer": "string",
+    "userAnswer": "string",
+    "explanation": "string"
+  },
+  ...
+]
+Provide a separate "verdict" string summarizing the candidate's performance, focusing on areas within the subject "${subject}" or chapters "${chapters}" where the candidate needs improvement for the exam "${exam}".
+Do not provide unexpected whitespace in between.
+IMPORTANT: Do not include any external text or explanations. Only return the array of objects and the "verdict" string.
+
+Questions with user answers:
+${JSON.stringify(answers)}`;
+
         const response = await model.invoke(prompt);
+        let responseContent = response.content as string;
+
+        const jsonArrayString = responseContent.substring(
+            responseContent.indexOf('['),
+            responseContent.lastIndexOf(']') + 1
+        );
+        const verdictString = responseContent.substring(
+            responseContent.lastIndexOf(']') + 1
+        ).trim().replace(/^"verdict":/, '').trim();
+
         let parsedResponse;
         try {
-            parsedResponse = JSON.parse(response.content as string);
-        } catch (parseerror: any) {
-            console.warn("Warning: Failed to parse response as JSON:", parseerror.message);
+            parsedResponse = {
+                responses: JSON.parse(jsonArrayString),
+                verdict: verdictString
+            };
+            console.log(parsedResponse);
+        } catch (parseError: any) {
+            console.warn("Warning: Failed to parse response as JSON:", parseError.message);
             parsedResponse = response.content;
         }
+
         return res.status(200).json({ response: parsedResponse });
     } catch (error: any) {
         console.error("Error generating explanation:", error.message);
         return res.status(500).json({ error: "Failed to generate explanation. Please try again." });
     }
 };
+
+
+
 

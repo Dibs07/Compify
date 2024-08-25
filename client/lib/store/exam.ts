@@ -6,6 +6,6 @@ interface ExamState {
 }
 
 export const useExam = create<ExamState>()((set) => ({
-  exam: undefined,
+  exam: '',
   setExam: (exam) => set(() => ({ exam })),
 }));

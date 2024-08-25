@@ -1,8 +1,14 @@
-"use client"
-import { userAnswers } from '@/lib/store/answers';
+"use client";
 import { useExamStore } from '@/lib/store/examMode';
 import React, { useState, useEffect } from 'react';
 import { BeatLoader } from 'react-spinners';
+import { getAnswers } from '@/utils/getAnswers';
+import { useAnswersStore } from '@/lib/store/answers';
+import { useSubject } from '@/lib/store/subject';
+import { useExam } from '@/lib/store/exam';
+import { useChapter } from '@/lib/store/chapters';
+import SubmitModal from '@/components/common/Exam/SubmitModal';
+import { useRouter } from 'next/navigation';
 
 const Exam = () => {
     const [examData, setExamData] = useState<any>([]);
@@ -10,10 +16,12 @@ const Exam = () => {
     const minutesPerQuestion = useExamStore((state) => state.minutesPerQuestion);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(minutesPerQuestion * 60); 
+    const [timeLeft, setTimeLeft] = useState(minutesPerQuestion * 60);
     const [selectedOption, setSelectedOption] = useState(null);
+    const [showSubmitModal, setShowSubmitModal] = useState(false); 
 
-    const { answers, setAnswers } = userAnswers(); 
+    const { answers, setAnswers, setSubmissionResponse } = useAnswersStore();
+    const router = useRouter();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -49,28 +57,27 @@ const Exam = () => {
             const totalQuestions = examData[currentChapterIndex].questions.length;
             if (currentQuestionIndex < totalQuestions - 1) {
                 setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+                setTimeLeft(minutesPerQuestion * 60);
             } else if (currentChapterIndex < examData.length - 1) {
                 setCurrentChapterIndex((prevIndex) => prevIndex + 1);
+                setTimeLeft(minutesPerQuestion * 60);
                 setCurrentQuestionIndex(0);
             } else {
-                console.log("Exam finished");
+                setShowSubmitModal(true); // Show modal when the last question is finished
             }
         }
     };
 
     const handleOptionSelect = (option: any) => {
         setSelectedOption(option);
-        
-        // Save the user's answer
+
         if (currentChapter && currentQuestion) {
             const updatedAnswers = answers ? [...answers] : [];
             const existingAnswerIndex = updatedAnswers.findIndex(answer => answer.question === currentQuestion.question);
 
             if (existingAnswerIndex > -1) {
-                // Update the existing answer
                 updatedAnswers[existingAnswerIndex].userAnswer = option;
             } else {
-                // Add a new answer
                 updatedAnswers.push({
                     question: currentQuestion.question,
                     options: currentQuestion.options,
@@ -79,38 +86,50 @@ const Exam = () => {
                 });
             }
 
-            setAnswers(updatedAnswers); // Update the answers state
+            setAnswers(updatedAnswers); 
         }
+    };
+
+    const subject = useSubject((state)=>state.subject);
+    const exam:any = useExam((state)=>state.exam);
+    const chapters:any = useChapter((state)=>state.chapter);
+
+    const handleSubmit = async () => {
+        localStorage.setItem('answers',JSON.stringify({subject,exam,chapters,answers}))
+        setLoading(true);
+        setLoading(false);
+        setShowSubmitModal(false);
+        router.push('/result');
     };
 
     const currentChapter = examData[currentChapterIndex];
     const currentQuestion = currentChapter ? currentChapter.questions[currentQuestionIndex] : null;
     const isLastQuestion = currentQuestion ? currentQuestionIndex === currentChapter.questions.length - 1 : false;
 
-    if (loading) {
-        return (
-            <div className='flex flex-row items-center justify-center mx-auto w-full'>
-                <BeatLoader size={20} color='black' />
-            </div>
-        );
-    }
-
     return (
         <div className="flex flex-col h-screen p-4 bg-gray-100">
+            {showSubmitModal && (
+                <SubmitModal
+                    isSubmitting={loading}
+                    onClose={() => setShowSubmitModal(false)}
+                    onSubmit={handleSubmit}
+                    onCancel={() => setShowSubmitModal(false)}
+                />
+            )}
             <div className="flex justify-between items-center mb-4 bg-gray-200 p-4 rounded-lg shadow-md">
                 <span className="text-lg font-semibold flex items-center">
                     Chapter: {currentChapter ? currentChapter.chapter : <BeatLoader color='black' size={20} />}
                 </span>
                 <span className="text-lg font-semibold">Timer: {timeLeft}s</span>
                 <div className="flex space-x-2">
-                    <button 
-                        onClick={() => window.location.href = '/'} 
+                    <button
+                        onClick={() => window.location.href = '/'}
                         className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition"
                     >
                         Exit
                     </button>
                     <button
-                        onClick={() => console.log("Submit clicked")}
+                        onClick={() => setShowSubmitModal(true)} // Show modal on submit button click
                         className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition"
                     >
                         Submit
@@ -134,7 +153,7 @@ const Exam = () => {
                                 ))}
                             </div>
                             <button
-                                onClick={handleNextQuestion}
+                                onClick={isLastQuestion ? () => setShowSubmitModal(true) : handleNextQuestion} // Show modal on last question's finish click
                                 className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition"
                             >
                                 {isLastQuestion ? 'Finish' : 'Next'}
