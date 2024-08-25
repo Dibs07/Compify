@@ -165,6 +165,22 @@ ${JSON.stringify(answers)}`;
     }
 };
 
+export const getHistory = async (req: Request, res: Response) => {
+    try {
+        const user: any = req.user;
+        const history = await db.prep.findMany({
+            where: {
+                userId: user.id
+            },
+        });
+
+        return res.status(200).json({
+            history
+        });
+    } catch (error) {
+        console.log('[GET_HISTORY_ERROR]', error);
+    }
+}
 
 
 
