@@ -1,6 +1,6 @@
 export const getResponseFromBot = async (text: string): Promise<string> => {
     const accessToken = localStorage.getItem("acc_compify");
-  const response = await fetch('http://localhost:5000/api/v1/study/chat', {
+  const response = await fetch('https://compify.onrender.com/api/v1/study/chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

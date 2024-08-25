@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:5000/api/v1/prep/"
+const baseUrl = "https://compify.onrender.com/api/v1/prep/"
 
 export const getExams = async () => {
     try {

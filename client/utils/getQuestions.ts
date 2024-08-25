@@ -1,7 +1,7 @@
 export const getQuestions = async (exam:string, subject:string, chapters:string[], medium:string, numberOfQuestions:string, pyq:boolean) => {
     try {
         const accessToken = localStorage.getItem("acc_compify");
-        const response: any = await fetch('http://localhost:5000/api/v1/prep/questions',
+        const response: any = await fetch('https://compify.onrender.com/api/v1/prep/questions',
             {
                 method: 'POST',
                 headers: {

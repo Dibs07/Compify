@@ -14,7 +14,7 @@ const Signup = () => {
   const handleSignup = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/v1/auth/signup', {
+      const res = await axios.post('https://compify.onrender.com/api/v1/auth/signup', {
         name,
         email,
         password
