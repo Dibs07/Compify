@@ -1,10 +1,11 @@
+import DashboardCard from '@/components/common/Dashboard/DashboardCard'
 import React from 'react'
 
-type Props = {}
-
-const Dashboard = (props: Props) => {
+const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div className='flex flex-row items-center justify-center bg-gradient-to-r from-gray-400 via-gray-300 to-gray-200'>
+      <DashboardCard />
+    </div>
   )
 }
 
