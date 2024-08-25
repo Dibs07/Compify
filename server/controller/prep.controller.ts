@@ -137,7 +137,7 @@ ${JSON.stringify(answers)}`;
 
         let parsedResponse;
 
-        const explainedAswer = JSON.parse(jsonArrayString);
+        let explainedAswer = JSON.parse(jsonArrayString);
         try {
             parsedResponse = {
                 responses: explainedAswer,
@@ -149,6 +149,22 @@ ${JSON.stringify(answers)}`;
             parsedResponse = response.content;
         }
 
+        explainedAswer = explainedAswer.map((answer: any) => {
+            return {
+                ...answer,
+                exam,
+                subject,
+                chapters,
+            };
+        })
+
+        // explainedAswer = {
+        //     ...explainedAswer,
+        //     exam,
+        //     subject,
+        //     chapters,
+        // };
+        console.log(explainedAswer);
         const prepData = await db.prep.create({
             data: {
                 userId: user.id,
