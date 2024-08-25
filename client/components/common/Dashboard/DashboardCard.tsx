@@ -6,6 +6,7 @@ export default function DashboardCard({data}:{data: any}) {
     const handleClick = ()=>{
         router.push(`/result/${data.id}`)
     }
+    console.log(data);
   return (
     <div className="flex items-center justify-center rounded-xl bg-gray-100">
       <Card>
