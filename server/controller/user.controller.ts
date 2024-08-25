@@ -129,18 +129,20 @@ export const logout = (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     try {
-        const user = req.user;
+        const user: any = req.user;
         const existUser = await db.user.findFirst({
             where: {
-                id: user.id as string
+                id: user.id
+            },
+            select: {
+                name: true,
+                email: true,
+                preps: true
             }
         });
         return res.status(200).json({
             message: 'User found',
-            user: {
-                name: existUser?.name,
-                email: existUser?.email
-            }
+            user: existUser
         });
     } catch (error) {
         console.log('[GET_PROFILE_ERROR]', error);
