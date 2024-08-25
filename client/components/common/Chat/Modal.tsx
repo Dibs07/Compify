@@ -79,7 +79,7 @@ const Modal: React.FC<ModalProps> = ({ headerTitle, onClose, step, onNext, onBac
                         : renderContent()}
                     </div>
 
-                    {!loading && step==6 && <div className="flex justify-end p-4 md:p-5 border-t dark:border-gray-600">
+                    {!loading && step!==5 && <div className="flex justify-end p-4 md:p-5 border-t dark:border-gray-600">
                         {step > 1 && (
                             <button
                                 type="button"
