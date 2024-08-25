@@ -181,6 +181,24 @@ export const getHistory = async (req: Request, res: Response) => {
         console.log('[GET_HISTORY_ERROR]', error);
     }
 }
+export const getHistoryById = async (req: Request, res: Response) => {
+    try {
+        const user: any = req.user;
+        const id = req.params.id;
+        const history = await db.prep.findMany({
+            where: {
+                id: id,
+                userId: user.id
+            },
+        });
+
+        return res.status(200).json({
+            history
+        });
+    } catch (error) {
+        console.log('[GET_HISTORY_ERROR]', error);
+    }
+}
 
 
 

@@ -6,7 +6,8 @@ import {
     generateQuestions,
     generateSubjects,
     generateTopics,
-    getHistory
+    getHistory,
+    getHistoryById
 } from '../controller/prep.controller';
 import { isAuthenticated } from '../middleware/verify-user';
 
@@ -19,6 +20,7 @@ prepRouter.post('/topics', isAuthenticated, generateTopics);
 prepRouter.post('/questions', isAuthenticated, generateQuestions);
 prepRouter.post('/answers', isAuthenticated, generateExplanation);
 prepRouter.get('/get-prep-history', isAuthenticated, getHistory);
+prepRouter.get('/get-prep-history/:id', isAuthenticated, getHistoryById);
 
 
 export default prepRouter;
