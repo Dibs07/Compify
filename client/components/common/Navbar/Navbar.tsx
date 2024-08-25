@@ -63,7 +63,7 @@ const Navbar = () => {
                                         <li
                                             className="my-3 mx-4 cursor-pointer text-black font-bold"
                                         >
-                                            Dashboard
+                                            DASHBOARD
                                         </li>
                                     </Link>
                                 )}
