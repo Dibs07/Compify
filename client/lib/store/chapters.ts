@@ -6,6 +6,6 @@ interface ChapterState {
 }
 
 export const useChapter = create<ChapterState>()((set) => ({
-  chapter: undefined,
+  chapter: [''],
   setChapter: (chapter) => set(() => ({ chapter })),
 }));

@@ -1,16 +1,16 @@
 "use client"
-import ChatCard from '@/components/common/Chat/ChatCard'
-import ChatCards from '@/components/common/Chat/ChatCards'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import ChatCards from '@/components/common/Chat/ChatCards';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import "../globals.css";
 
 const Chat = () => {
-
   const [token, setToken] = useState<string | null>(null);
+
   useEffect(() => {
     const accessToken = localStorage.getItem("acc_compify");
     setToken(accessToken);
-  }, [])
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -25,15 +25,20 @@ const Chat = () => {
 
     if (!token) return;
     fetchUser();
-  }, [token])
+  }, [token]);
 
   return (
-    <>
-      <div className='fixed inset-x-0 flex items-center justify-center'>
+    <div className="relative h-screen w-screen overflow-hidden">
+      <img
+        src='wave-bg.avif'
+        className='absolute inset-0 h-full w-full object-cover opacity-55'
+        alt='Background'
+      />
+      <div className='absolute inset-0 flex items-center justify-center'>
         <ChatCards />
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default Chat
+export default Chat;

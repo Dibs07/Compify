@@ -1,14 +1,15 @@
 import Link from 'next/link'
 import React from 'react'
+import Image from 'next/image'
 
 const Footer = () => {
     return (
         <div>
             <footer className="text-gray-600 body-font">
                 <div className="container px-5 py-5 mx-auto flex items-center sm:flex-row flex-col">
-                    <a className="flex title-font font-medium items-center md:justify-start justify-center text-white">
-                        <span className="text-xl inria-sans-bold font-bold text-black">Compify</span>
-                    </a>
+                    <div className="flex-shrink-0">
+                        <Image width={150} height={150} className="object-cover" src="/svg/logo-black-remove-bg.png" alt="logo" />
+                    </div>
                     <p className="text-sm text-black inria-sans-bold sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
                         © 2024 compify —
                         <Link

@@ -122,8 +122,8 @@ const ChatCards = () => {
             if (typeof localStorage !== 'undefined') {
                 try {
                     const questionsJSON = JSON.stringify(data.responses);
-                    console.log('Storing questions:', questionsJSON); 
-                    localStorage.setItem('verificationToken',data.verificationToken);
+                    console.log('Storing questions:', questionsJSON);
+                    localStorage.setItem('verificationToken', data.verificationToken);
                     localStorage.setItem('questions', questionsJSON);
                 } catch (error) {
                     console.error('Error storing questions in localStorage:', error);
@@ -149,34 +149,25 @@ const ChatCards = () => {
         {
             title: 'STUDY',
             description: 'Focus on learning and understanding the concepts thoroughly.',
-            icon: <ImPencil className='text-green-800 text-3xl mb-2' />,
-            color: 'border-green-800'
+            icon: <ImPencil className='text-primary-700 text-3xl mb-2' />,
+            color: 'border-primary-700'
         },
-        {
-            title: 'CHAT',
-            description: 'Engage in discussions and share your knowledge with others.',
-            icon: <IoMdChatbubbles className='text-yellow-500 text-3xl mb-2' />,
-            color: 'border-yellow-500'
-        }
-
     ];
 
     return (
-        <div className="flex items-center justify-center min-h-screen px-5 md:px-20">
-            <div className="relative w-full">
-                <div className="mx-auto max-w-full flex flex-col gap-10">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {cardsData.map((card, index) => (
-                            <ChatCard
-                                key={index}
-                                title={card.title}
-                                description={card.description}
-                                onClick={() => handleCardClick(card.title)}
-                                icon={card.icon}
-                                color={card.color}
-                            />
-                        ))}
-                    </div>
+        <div className="flex items-center justify-center min-h-screen px-5">
+            <div className="w-full max-w-4xl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    {cardsData.map((card, index) => (
+                        <ChatCard
+                            key={index}
+                            title={card.title}
+                            description={card.description}
+                            onClick={() => handleCardClick(card.title)}
+                            icon={card.icon}
+                            color={card.color}
+                        />
+                    ))}
                 </div>
             </div>
 
