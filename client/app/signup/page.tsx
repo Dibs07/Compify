@@ -1,7 +1,7 @@
 "use client";
 import axios from 'axios';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../globals.css"
 import { useRouter } from 'next/navigation';
 
@@ -30,6 +30,13 @@ const Signup = () => {
       setPassword("");
     }
   }
+  useEffect(() => {
+    const token = localStorage.getItem("acc_compify");
+    if(token){
+      router.push("/chat")
+    }
+  }, []
+  )
   return (
     <div className="fixed inset-0 flex items-center justify-center">
       <div className="relative bg-white rounded-lg shadow-2xl dark:bg-gray-700 w-full max-w-lg">
