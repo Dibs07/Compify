@@ -1,0 +1,57 @@
+"use client";
+import { useState, useEffect, useRef } from 'react';
+import Message from './Message';
+import { getResponseFromBot } from '@/utils/getResponseFromBot';
+
+export const ChatBotUI = () => {
+  const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
+  const [input, setInput] = useState('');
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);  // Create a ref for the chat container
+
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+
+    setMessages((prevMessages) => [...prevMessages, { text: input, isUser: true }]);
+    const userInput = input;
+    setInput('');
+
+    try {
+      const botResponse = await getResponseFromBot(userInput);
+      setMessages((prevMessages) => [...prevMessages, { text: botResponse, isUser: false }]);
+    } catch (error) {
+      console.error("Error fetching response from bot:", error);
+      setMessages((prevMessages) => [...prevMessages, { text: "Error getting response from bot", isUser: false }]);
+    }
+  };
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat container whenever messages are updated
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);  // Dependency array includes messages to trigger the effect on message update
+
+  return (
+    <div className="flex flex-col h-screen max-w-md mx-auto">
+      {/* Assign the ref to the chat container */}
+      <div className="flex-grow p-4 overflow-y-auto mb-20" ref={chatContainerRef}>
+        {messages.map((msg, index) => (
+          <Message key={index} message={msg.text} isUser={msg.isUser} />
+        ))}
+      </div>
+
+      <div className="fixed bottom-0 left-0 right-0 p-4 border-t border-gray-300 bg-white max-w-md mx-auto">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          placeholder="Type a message..."
+          className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default ChatBotUI;
