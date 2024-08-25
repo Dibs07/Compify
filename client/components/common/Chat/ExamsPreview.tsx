@@ -16,7 +16,7 @@ const ExamsPreview = () => {
     const minutesPerQuestion = useExamStore((state) => state.minutesPerQuestion);
     const subjectForExam = useSubject((state)=>state.subject);
     const exam: any = useExam((state)=>state.exam);
-
+    const chapters:any = useChapter((state)=>state.chapter);
     const totalDuration = numberOfQuestions * minutesPerQuestion * selectedChapters?.length;
 
     const examName = exam;
@@ -24,6 +24,11 @@ const ExamsPreview = () => {
 
     const handleStartExam = () => {
         if(localStorage.getItem('acc_compify') && localStorage.getItem('verificationToken')){
+            localStorage.setItem('assessment_data',JSON.stringify({
+                exam,
+                subject,
+                chapters,
+            }))
             router.push('/exam');
         }
         else{
