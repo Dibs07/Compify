@@ -7,10 +7,24 @@ export const ChatBotUI = () => {
   const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
   const [input, setInput] = useState('');
   const chatContainerRef = useRef<HTMLDivElement | null>(null);  // Create a ref for the chat container
-
+  const data = typeof localStorage !== 'undefined' && localStorage.getItem('answers');
+  useEffect(()=>{
+    const getFirstMessage = async () => {
+      try {
+        if(data){
+          const botResponse = await getResponseFromBot( "Wish me as a teacher to ask if I have any doubt, make it a bit short and crisp !");
+          setMessages((prevMessages) => [...prevMessages, { text: botResponse, isUser: false }]);
+        }
+      } catch (error) {
+        console.error("Error fetching response from bot:", error);
+        setMessages((prevMessages) => [...prevMessages, { text: "Error getting response from bot", isUser: false }]);
+      }
+    };
+    getFirstMessage();
+  },[])
   const sendMessage = async () => {
     if (!input.trim()) return;
-
+    
     setMessages((prevMessages) => [...prevMessages, { text: input, isUser: true }]);
     const userInput = input;
     setInput('');
@@ -25,15 +39,14 @@ export const ChatBotUI = () => {
   };
 
   useEffect(() => {
-    // Scroll to the bottom of the chat container whenever messages are updated
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
-  }, [messages]);  // Dependency array includes messages to trigger the effect on message update
+  }, [messages]);  
 
   return (
     <div className="flex flex-col h-screen max-w-md mx-auto">
-      {/* Assign the ref to the chat container */}
+      
       <div className="flex-grow p-4 overflow-y-auto mb-20" ref={chatContainerRef}>
         {messages.map((msg, index) => (
           <Message key={index} message={msg.text} isUser={msg.isUser} />

@@ -12,18 +12,19 @@ const Navbar = () => {
     const [userImg, setUserImg] = useState("");
     const router = useRouter();
     const pathname = usePathname();
-    const [role, setRole] = useState("");
 
     return (
         <>
-            <div className="flex items-center justify-between pt-2 text-white w-screen overflow-x-hidden font-hollirood lg:w-full">
+            <div className="flex items-center mx-auto justify-between pt-2 text-white w-screen overflow-x-hidden font-hollirood lg:w-full">
                 <div
                     className={`flex-grow ${scrolling || isMenuOpen
                             ? "rounded-xl border-b bg-body"
                             : "bg-transparent"
                         }  py-2 max-md:border-b`}
                 >
-                    <div className="flex justify-center items-center w-full max-w-screen-xl">
+                    
+                    <div className="flex mx-auto justify-center items-center w-full ">
+                    
                         <div
                             className="flex h-full w-8 cursor-pointer flex-col items-center justify-center gap-[6px] md:hidden"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -44,6 +45,7 @@ const Navbar = () => {
                                 `}
                             ></span>
                         </div>
+                        <h1 className="font-semibold text-4xl text-blue-800 md:ml-20">Compify </h1>
                         <ul
                             className="flex flex-row gap-2 justify-center w-full"
                         >
@@ -62,6 +64,12 @@ const Navbar = () => {
                                     </li>
                                 </Link>
                             ))}
+                           {typeof localStorage !== 'undefined' && localStorage.getItem('acc_compify') && <button onClick={()=>{
+                                localStorage.removeItem("acc_compify");
+                                router.push("/login");
+                            }} className="bg-white border text-blue-600 border-blue-600 rounded-xl px-5 py-1 font-semibold text-md">
+                                Logout
+                            </button>}
                         </ul>
                     </div>
                 </div>

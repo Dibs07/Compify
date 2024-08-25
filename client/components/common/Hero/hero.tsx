@@ -4,7 +4,7 @@ import React from 'react'
 
 const Hero = () => {
     return (
-        <div>
+        <div className='h-[70vh]'>
             <section className=" dark:bg-gray-900">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:pt-8 lg:px-10">
                     <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Compify : Learn to Compete</h1>

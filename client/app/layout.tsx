@@ -8,9 +8,10 @@ import Footer from "@/components/common/Footer/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Compify",
-  description: "A website that helps competitive exam aspirants by recommending mock exams based on selected subjects and chapters.",
+  title: "Compify : Your Competitive AI Friend",
+  description: "Compify is an AI friend that helps you with your competitive programming journey. It can help you with your doubts, provide you with resources, and even help you with your code.",
 };
+
 
 export default function RootLayout({
   children,

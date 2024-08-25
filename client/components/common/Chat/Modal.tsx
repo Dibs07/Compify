@@ -42,8 +42,8 @@ const Modal: React.FC<ModalProps> = ({ headerTitle, onClose, step, onNext, onBac
             aria-hidden="true"
             className="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50"
         >
-            <div className="relative p-4 w-full max-w-md max-h-full">
-                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 max-h-[80vh] overflow-y-auto">
+            <div className="relative p-4 w-full max-w-md">
+                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                             {headerTitle}
@@ -71,15 +71,15 @@ const Modal: React.FC<ModalProps> = ({ headerTitle, onClose, step, onNext, onBac
                             <span className="sr-only">Close modal</span>
                         </button>
                     </div>
-                    {/* Content area */}
-                    <div className="p-4 md:p-5">
+                    <div className="p-4 md:p-5 max-h-[60vh] overflow-y-auto"> {/* Make this area scrollable */}
                         {loading ? 
                         <div className='flex flex-row items-center justify-center mx-auto w-full'>
                             <ClimbingBoxLoader loading={loading} size={10} color='black' />
                         </div>
                         : renderContent()}
                     </div>
-                    <div className="flex justify-end p-4 md:p-5 border-t dark:border-gray-600">
+
+                    {!loading && step!==5 && <div className="flex justify-end p-4 md:p-5 border-t dark:border-gray-600">
                         {step > 1 && (
                             <button
                                 type="button"
@@ -97,7 +97,7 @@ const Modal: React.FC<ModalProps> = ({ headerTitle, onClose, step, onNext, onBac
                         >
                             Next
                         </button>
-                    </div>
+                    </div>}
                 </div>
             </div>
         </div>
