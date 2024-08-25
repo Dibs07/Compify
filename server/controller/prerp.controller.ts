@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { model } from "../config/model";
 import * as jwt from 'jsonwebtoken';
+import { db } from "../config/db";
 
 export const generateExams = async (req: Request, res: Response) => {
     const prompt = `Generate me the list (Only 5) of indian competitive exams in the form of array of strings. Don't give any external text except the array.`;
@@ -96,13 +97,14 @@ export const generateQuestions = async (req: Request, res: Response) => {
         }
     }
 
-    
+
 };
 
 
 export const generateExplanation = async (req: Request, res: Response) => {
     try {
         const { answers, exam, subject, chapters } = req.body;
+        const user: any = req.user;
         const prompt = `Check the userAnswer against the correct answer for each question provided in the following data. Generate an array of objects where each object contains the original question, options, correct answer, userAnswer, and a detailed explanation for each question. 
 The final output should be in the following format:
 [
@@ -134,16 +136,27 @@ ${JSON.stringify(answers)}`;
         ).trim().replace(/^"verdict":/, '').trim();
 
         let parsedResponse;
+
+        const explainedAswer = JSON.parse(jsonArrayString);
         try {
             parsedResponse = {
-                responses: JSON.parse(jsonArrayString),
+                responses: explainedAswer,
                 verdict: verdictString
             };
-            console.log(parsedResponse);
+            // console.log(parsedResponse);
         } catch (parseError: any) {
             console.warn("Warning: Failed to parse response as JSON:", parseError.message);
             parsedResponse = response.content;
         }
+
+        const prepData = await db.prep.create({
+            data: {
+                userId: user.id,
+                content: explainedAswer
+            }
+        });
+
+        console.log(prepData);
 
         return res.status(200).json({ response: parsedResponse });
     } catch (error: any) {
