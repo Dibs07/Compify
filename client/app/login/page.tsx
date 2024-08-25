@@ -1,6 +1,7 @@
 "use client";
 import axios from 'axios';
 import React, { useState } from 'react';
+import "../globals.css"
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -24,7 +24,6 @@ const Navbar = () => {
                         }  py-2 max-md:border-b`}
                 >
                     <div className="flex justify-between items-center w-full max-w-screen-xl">
-                        {/* Hamburger Icon */}
                         <div
                             className="flex h-full w-8 cursor-pointer flex-col items-center justify-center gap-[6px] md:hidden"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -45,8 +44,6 @@ const Navbar = () => {
                                 `}
                             ></span>
                         </div>
-
-                        {/* Navbar Links */}
                         <ul
                             className="flex flex-row gap-2"
                         >
