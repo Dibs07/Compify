@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cookieparser());
 
 app.use(cors({
-  origin: 'https://compify.vercel.app/',
+  origin: '*',
   credentials: true
 }));
 
