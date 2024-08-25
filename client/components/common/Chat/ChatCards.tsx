@@ -121,9 +121,9 @@ const ChatCards = () => {
             const data = await getQuestions(exam, subject, chapter, medium, numberOfQuestions, pyq);
             if (typeof localStorage !== 'undefined') {
                 try {
-                    console.log(data)
-                    const questionsJSON = JSON.stringify(data);
-                    console.log('Storing questions:', questionsJSON); // Log what's being stored
+                    const questionsJSON = JSON.stringify(data.responses);
+                    console.log('Storing questions:', questionsJSON); 
+                    localStorage.setItem('verificationToken',data.verificationToken);
                     localStorage.setItem('questions', questionsJSON);
                 } catch (error) {
                     console.error('Error storing questions in localStorage:', error);

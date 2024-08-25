@@ -2,11 +2,13 @@ const baseUrl = "http://localhost:5000/api/v1/prep/"
 
 export const getExams = async () => {
     try {
+        const accessToken = localStorage.getItem("acc_compify");
         const response: any = await fetch(baseUrl,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'token': accessToken as string
                 },
             }
         );
@@ -19,11 +21,13 @@ export const getExams = async () => {
 
 export const getSubjects = async () => { 
     try {
+        const accessToken = localStorage.getItem("acc_compify");
         const response: any = await fetch(`${baseUrl}/subjects`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'token': accessToken as string
                 },
             }
         );

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { model } from "../config/model";
+import * as jwt from 'jsonwebtoken';
 
 export const generateExams = async (req: Request, res: Response) => {
     const prompt = `Generate me the list (Only 5) of indian competitive exams in the form of array of strings. Don't give any external text except the array.`;
@@ -50,8 +51,10 @@ export const generateTopics = async (req: Request, res: Response) => {
 
 
 export const generateQuestions = async (req: Request, res: Response) => {
-    const { exam, subject, chapters, medium, numberOfQuestions, pyq } = req.body;
-
+    const { exam, subject, chapters, medium, numberOfQuestions, pyq, time } = req.body;
+    const user: any = req.user;
+    if (!user)
+        return res.status(401).json({ message: 'User do not exists' });
     if (!Array.isArray(chapters) || chapters.length === 0) {
         return res.status(400).json({ error: "Chapters should be a non-empty array." });
     }
@@ -76,14 +79,24 @@ export const generateQuestions = async (req: Request, res: Response) => {
                 parsedResponse = response.content;  // Fallback to raw content
             }
 
+            const total_time = Number(numberOfQuestions) * Number(time);
+            const payload = {
+                userId: user.id,
+                time: total_time,
+                no_q: numberOfQuestions
+            };
+            const verification_secret = process.env.EXAM_TOKEN_SECRET;
+            const verificationToken = jwt.sign(payload, verification_secret as string);
+
             responses.push({ chapter, questions: parsedResponse });
+            return res.status(200).json({ responses, verificationToken });
         } catch (error: any) {
             console.error(`Error generating questions for chapter ${chapter}:`, error.message);
             return res.status(500).json({ error: `Failed to generate questions for chapter ${chapter}. Please try again.` });
         }
     }
 
-    return res.status(200).json({ responses });
+    
 };
 
 
