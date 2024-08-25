@@ -5,8 +5,9 @@ import {
     generateExplanation,
     generateQuestions,
     generateSubjects,
-    generateTopics
-} from '../controller/prerp.controller';
+    generateTopics,
+    getHistory
+} from '../controller/prep.controller';
 import { isAuthenticated } from '../middleware/verify-user';
 
 const prepRouter = express.Router();
@@ -17,6 +18,7 @@ prepRouter.post('/chapters', isAuthenticated, generateChapters);
 prepRouter.post('/topics', isAuthenticated, generateTopics);
 prepRouter.post('/questions', isAuthenticated, generateQuestions);
 prepRouter.post('/answers', isAuthenticated, generateExplanation);
+prepRouter.get('/get-prep-history', isAuthenticated, getHistory);
 
 
 export default prepRouter;

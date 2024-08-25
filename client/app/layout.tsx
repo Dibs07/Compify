@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
 import React from "react";
 import Navbar from "@/components/common/Navbar/Navbar";
-import { Metadata } from "next";
+import Footer from "@/components/common/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +18,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
-      <body className={inter.className + "cursor-auto"}>
-        <Navbar/>
+      <body
+        className={`${inter.className} flex flex-col min-h-screen bg-gradient-to-r from-gray-400 via-gray-300 to-gray-200 cursor-auto`}
+      >
+        <Navbar />
         {children}
       </body>
     </html>

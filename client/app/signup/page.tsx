@@ -3,21 +3,32 @@ import axios from 'axios';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import "../globals.css"
+import { useRouter } from 'next/navigation';
 
 const Signup = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
   const handleSignup = async (e: any) => {
     e.preventDefault();
-    const res = await axios.post('http://localhost:5000/api/v1/auth/signup', {
-      name,
-      email,
-      password
-    });
-    const data = res.data;
-    localStorage.setItem("acc_compify", data.accessToken);
+    try {
+      const res = await axios.post('http://localhost:5000/api/v1/auth/signup', {
+        name,
+        email,
+        password
+      });
+      const data = res.data;
+      localStorage.setItem("acc_compify", data.accessToken);
+      router.push('/chat');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setName("");
+      setEmail("");
+      setPassword("");
+    }
   }
   return (
     <div className="fixed inset-0 flex items-center justify-center">
