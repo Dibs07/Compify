@@ -1,6 +1,11 @@
 import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
 
-export default function DashboardCard() {
+export default function DashboardCard({data}:{data: any}) {
+    const router = useRouter()
+    const handleClick = ()=>{
+        router.push(`/result/${data.id}`)
+    }
   return (
     <div className="flex items-center justify-center inset-y-1/2 rounded-xl border-black border-2 bg-gray-100">
       <Card className="max-w-sm">
@@ -14,7 +19,8 @@ export default function DashboardCard() {
           </p>
         </CardContent>
         <CardFooter>
-          <button className="px-4 py-2 text-white bg-black rounded-md">
+          <button className="px-4 py-2 text-white bg-black rounded-md"
+           onClick={handleClick}>
             View Details
         </button>
         </CardFooter>
