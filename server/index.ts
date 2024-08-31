@@ -17,14 +17,12 @@ app.use(bodyParser.json());
 app.use(cookieparser());
 
 app.use(cors({
-  origin: '*',
   credentials: true
 }));
 
 app.use('/api/v1/auth', userRouter);
 app.use('/api/v1/study', studyRouter);
 app.use('/api/v1/prep', prepRouter);
-// TODO: Chat Router
 
 app.listen(port, () => {
   console.log(`Server is listening on port: ${port}`);
